@@ -43,7 +43,7 @@ class FishBot:
 
         while True:
             # Capture the entire screen to draw boxes over it
-            monitor = self.sct.monitors[4]
+            monitor = self.sct.monitors[1]
             frame = np.array(self.sct.grab(monitor))
             frame = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)  # Convert to BGR for OpenCV
 
