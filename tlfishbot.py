@@ -26,7 +26,7 @@ class FishBot:
 	#TLWINDOW="TL 1.138.22.570"
 	def __init__(self):
 		# Selecting the "Q Snap up with"
-		self.snapRegion = {"mon": 1, "top": (900), "left": (1225), "width": (32), "height": (32)}
+		self.snapRegion = {"mon": 1, "top": (900), "left": (1250), "width": (32), "height": (32)}
 
 		 # Selecting the "F Cast float"
 		self.castRegion = {"mon": 1, "top": (841), "left": (1524), "width": (25), "height": (25)}
@@ -97,6 +97,7 @@ class FishBot:
 		q_count = 0
 		wasCast = False
 		CASTED = time.time()
+		tracker = 0
 		while True:
 			# Sleep for 0.1 - 0.2s
 			animationSleepTime = .1 + (.1 * random.random())
@@ -113,7 +114,7 @@ class FishBot:
 			# Looking for the Q
 			foundQ = None
 			try:
-				foundQ = pyautogui.locate("imgs/Q.png", snapImg, grayscale=True, confidence=.7)
+				foundQ = pyautogui.locate("imgs/Q2.png", snapImg, grayscale=True, confidence=.7)
 			except Exception as ImageNotFoundException:
 				print("foundQ failed")
 			if foundQ:
@@ -147,6 +148,7 @@ class FishBot:
 								catchImg = self.sct.grab(monitor)
 								mss.tools.to_png(catchImg.rgb, catchImg.size, output=f"fish_caught_{q_count}.png")
 							print("Reeling in completed...")
+							tracker = 0
 							break
 					top = self.getFishBar()
 					if top == None: continue
@@ -189,9 +191,12 @@ class FishBot:
 				pyautogui.keyDown('f')
 				pyautogui.keyUp('f')
 				print("F Cast float")
+				tracker += 1
 				time.sleep(2 + animationSleepTime)
 				wasCast = True
 				CASTED = time.time()
+				
+			if tracker >= 5: sys.exit()
 				
 			time.sleep(0.125)
 			
